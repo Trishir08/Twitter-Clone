@@ -1,6 +1,6 @@
-import { User } from "../models/userSchema";
+import { User } from "../models/userSchema.js";
 import bcryptjs from "bcryptjs"
-import { jwt } from "jsonwebtoken"; 
+import jwt from "jsonwebtoken"; 
 
 import dotenv from "dotenv"
 
@@ -38,7 +38,7 @@ export const Register = async (req , res)=>{
             }) ;
 
             return res.status(201).json({
-                message : "Account created sucessfully ." ,
+                message : "Account created successfully ." ,
                 success : true
             })
         }catch(error){
@@ -114,3 +114,17 @@ export const bookmark = async(req, res) => {
         console.log(error) ; 
     }
 }
+
+export const getMyProfile = async(req,res)=>{
+    try{
+    const id = req.params.id ; 
+    const user = await User.findById(id).select("-password") ; 
+    return res.status(200).json({
+        user ,
+    })
+
+    } catch(error){
+        console.log(error);
+    }
+}
+
