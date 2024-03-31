@@ -128,3 +128,70 @@ export const getMyProfile = async(req,res)=>{
     }
 }
 
+export const getOtherUsers = async (req , res)=>{
+     try{
+        const {id} = req.params ;
+        const otherUsers = await User.find({_id : {$ne : id}}).select("-password") ;
+        if(!otherUsers){
+            return res.status(401).json({
+                message : "Currently does not have any users ."
+            })
+        }; 
+        return res.status(200).json({
+            otherUsers
+        })
+    }catch(error){
+        console.log(error) ; 
+     }
+}
+
+export const follow = async (req ,res)=>{
+    try{
+        const LoggedInUserId = req.body.id ;
+        const userId = req.params.id ; 
+        const LoggedInUser = await User.findById(LoggedInUserId) ; 
+        const user = await User.findById(userId) ; 
+        
+        if(!user.followers.includes(LoggedInUserId)){
+            await user.updateOne({$push : {followers : LoggedInUserId}}) ;
+            await LoggedInUser.updateOne({$push : {following : userId}}) ;
+        }
+        else{
+            return res.status(401).json({
+                message : `User already follow's ${user.name}` 
+            })
+        } ;
+        return res.status(200).json({
+            message : `${LoggedInUser.name} just followed ${user.name}` ,
+            success : true 
+        })
+    }catch(error){
+        console.log(error);
+    }
+}
+
+export const unfollow = async (req , res)=>{
+    try{
+        const LoggedInUserId = req.body.id ;
+        const userId = req.params.id ; 
+        const LoggedInUser = await User.findById(LoggedInUserId) ; 
+        const user = await User.findById(userId) ; 
+        
+        if(LoggedInUser.following.includes(userId)){
+            await user.updateOne({$pull : {followers : LoggedInUserId}}) ;
+            await LoggedInUser.updateOne({$pull : {following : userId}}) ;
+        }
+        else{
+            return res.status(401).json({
+                message : `User has not followed yet ` 
+            })
+        } ;
+        return res.status(200).json({
+            message : `${LoggedInUser.name} un-follow's ${user.name}` ,
+            success : true 
+        })
+    }catch(error){
+        console.log(error);
+    }
+}
+
