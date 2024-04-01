@@ -4,7 +4,7 @@ import { useEffect } from "react";
 import {useDispatch} from "react-redux";
 import { getMyProfile } from "../redux/userSlice";
 
-export const useGetProfile = (id) => {
+const useGetProfile = (id) => {
     const dispatch = useDispatch();
     useEffect(()=>{
         const fetchMyProfile = async () => {
@@ -21,3 +21,5 @@ export const useGetProfile = (id) => {
         fetchMyProfile();
     },[id , dispatch]);
 }
+
+export default useGetProfile 

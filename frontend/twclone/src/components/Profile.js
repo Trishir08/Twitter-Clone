@@ -3,7 +3,7 @@ import Avatar from 'react-avatar';
 import { IoMdArrowBack } from "react-icons/io";
 import { Link} from 'react-router-dom';
 import {useSelector} from 'react-redux'
-import {useGetProfile} from '../hooks/useGetProfile';
+import useGetProfile from '../hooks/useGetProfile';
 
 function Profile() {
     
