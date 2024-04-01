@@ -5,7 +5,7 @@ import { CiHeart } from "react-icons/ci";
 import { CiBookmark } from "react-icons/ci";
 
 
-function Tweet() {
+function Tweet({tweet}) {
   return (
     <div className='border-b border-gray-200'>
         <div>

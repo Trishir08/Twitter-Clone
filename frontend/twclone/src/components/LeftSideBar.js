@@ -6,8 +6,10 @@ import { FaUser } from "react-icons/fa";
 import { MdOutlineBookmarks } from "react-icons/md";
 import { IoMdLogOut } from "react-icons/io";
 import { Link } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 function LeftSideBar() {
+    const {user} = useSelector(store => store.user);
   return (
     <div className='w-[20%]'>
         <div>
@@ -36,7 +38,7 @@ function LeftSideBar() {
                     <h1 className='font-bold text-lg ml-2'>Notifications</h1>
                 </div>
 
-                <Link to="/profile" className='flex items-center my-2 py-2 px-4 hover:bg-gray-200 hover:cursor-pointer rounded-full'>
+                <Link to={`/profile/${user?._id}`} className='flex items-center my-2 py-2 px-4 hover:bg-gray-200 hover:cursor-pointer rounded-full'>
                     <div>
                         <FaUser size={"24px"}/>
                     </div>

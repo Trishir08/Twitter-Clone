@@ -1,14 +1,15 @@
 import React from 'react'
 import Avatar from 'react-avatar';
 import { IoMdArrowBack } from "react-icons/io";
-import { Link} from 'react-router-dom';
+import { Link, useParams} from 'react-router-dom';
 import {useSelector} from 'react-redux'
 import useGetProfile from '../hooks/useGetProfile';
 
 function Profile() {
     
-    const { user, profile } = useSelector(store => store.user);
-    useGetProfile(user._id);
+    const {profile } = useSelector(store => store.user);
+    const {id} = useParams() ;
+    useGetProfile(id);
 
   return (
     <div className='w-[50%] border-r border-l border-gray-200'> 
@@ -31,7 +32,7 @@ function Profile() {
             </div>
             <div className='m-4'>
                 <h1 className='font-bold text-xl'>{profile?.name}</h1>
-                <p>@tirhisr-08</p>
+                <p>{`@${profile?.username}`}</p>
             </div>
             <div className='m-4 text-sm'> 
                 <p>CHAMPIONS OF THE WORLD! 🏆🌍</p>
